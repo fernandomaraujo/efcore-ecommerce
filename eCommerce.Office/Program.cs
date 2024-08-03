@@ -28,7 +28,7 @@ foreach (var colab in colabVeiculo)
     Console.WriteLine(colab.Nome);
     foreach (var vinculo in colab.ColaboradoresVeiculo!)
     {
-        Console.WriteLine($"- {vinculo.Veiculo.Nome}({vinculo.Veiculo.Placa}):{vinculo.DataInicioDeVinculo}");
+        Console.WriteLine($"- {vinculo.Veiculo.Nome}({vinculo.Veiculo.Placa}):{vinculo.DataDeInicioDoVinculo}");
     }
 }
 
