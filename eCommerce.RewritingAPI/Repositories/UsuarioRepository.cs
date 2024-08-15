@@ -1,5 +1,6 @@
 ﻿using eCommerce.Models;
 using eCommerce.RewritingAPI.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.RewritingAPI.Repositories
 {
@@ -18,7 +19,7 @@ namespace eCommerce.RewritingAPI.Repositories
 
         public Usuario Get(int id)
         {
-            return _db.Usuarios.Find(id)!;
+            return _db.Usuarios.Include(a => a.Contato).Include(a => a.EnderecosEntrega).Include(a => a.Departamentos).FirstOrDefault(a => a.Id == id)!;
         }
 
         public void Add(Usuario usuario)
@@ -26,6 +27,8 @@ namespace eCommerce.RewritingAPI.Repositories
             /*
              * Unit of Works
              */
+            CriarVinculoDoUsuarioComDepartamento(usuario);
+
             _db.Usuarios.Add(usuario);
             _db.SaveChanges();
         }
@@ -40,6 +43,30 @@ namespace eCommerce.RewritingAPI.Repositories
         {
             _db.Usuarios.Remove(Get(id));
             _db.SaveChanges();
+        }
+
+        private void CriarVinculoDoUsuarioComDepartamento(Usuario usuario)
+        {
+            if (usuario.Departamentos != null)
+            {
+                var departamentos = usuario.Departamentos;
+
+                usuario.Departamentos = new List<Departamento>();
+
+                foreach (var departamento in departamentos)
+                {
+                    if (departamento.Id > 0)
+                    {
+                        //Ref. Registro do Banco de dados
+                        usuario.Departamentos.Add(_db.Departamentos.Find(departamento.Id)!);
+                    }
+                    else
+                    {
+                        //Ref. Objeto novo, que não existe no SGDB. (Novo registro de Departamento)
+                        usuario.Departamentos.Add(departamento);
+                    }
+                }
+            }
         }
     }
 }
