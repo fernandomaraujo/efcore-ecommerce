@@ -35,6 +35,10 @@ namespace eCommerce.RewritingAPI.Repositories
 
         public void Update(Usuario usuario)
         {
+            ExcluirVinculoDoUsuarioComDepartamento(usuario);
+
+            CriarVinculoDoUsuarioComDepartamento(usuario);
+
             _db.Usuarios.Update(usuario);
             _db.SaveChanges();
         }
@@ -67,6 +71,18 @@ namespace eCommerce.RewritingAPI.Repositories
                     }
                 }
             }
+        }
+
+        private void ExcluirVinculoDoUsuarioComDepartamento(Usuario usuario)
+        {
+            var usuarioDoBanco = _db.Usuarios.Include(a => a.Departamentos).FirstOrDefault(a => a.Id == usuario.Id);
+            foreach (var departamento in usuarioDoBanco!.Departamentos!)
+            {
+                usuarioDoBanco.Departamentos.Remove(departamento);
+            }
+
+            _db.SaveChanges();
+            _db.ChangeTracker.Clear();
         }
     }
 }
