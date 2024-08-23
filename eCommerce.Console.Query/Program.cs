@@ -65,3 +65,16 @@ foreach(var user in allUserList)
     Console.WriteLine($"- {user.Nome}");
 }
 
+// - OrderBy, OrderByDescending, ThenBy, ThenByDescending
+
+// Seguindo a ordem
+var userList01 = db.Usuarios.OrderBy(a => a.Nome).ToList();
+
+// Seguindo a ordem invertida
+var userList02 = db.Usuarios.OrderByDescending(a => a.Nome).ToList();
+
+// Ordenando informações dos usuários do sexo feminino
+var userList03 = db.Usuarios.OrderBy(a => a.Sexo!.Equals('F')).ThenBy(a => a.Nome).ToList();
+
+// Ordenando informações dos usuários pelo sexo, seguindo a ordem invertida
+var userList04 = db.Usuarios.OrderBy(a => a.Sexo).ThenByDescending(a => a.Nome).ToList();
