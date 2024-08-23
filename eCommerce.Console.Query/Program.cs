@@ -1,4 +1,5 @@
 ﻿using eCommerce.Console.Query;
+using Microsoft.EntityFrameworkCore;
 
 var db = new eCommerceContext();
 var usuarios = db.Usuarios!.ToList();
@@ -78,3 +79,25 @@ var userList03 = db.Usuarios.OrderBy(a => a.Sexo!.Equals('F')).ThenBy(a => a.Nom
 
 // Ordenando informações dos usuários pelo sexo, seguindo a ordem invertida
 var userList04 = db.Usuarios.OrderBy(a => a.Sexo).ThenByDescending(a => a.Nome).ToList();
+
+
+// - Eager Load - Include
+// Trabalhando com relacionamentos
+
+// Include (Nível 1) = Inclui um objeto relacionado a classe atual.
+var userList05 = db.Usuarios.Include(a => a.Contato).ToList();
+
+// ThenInclude (Nível 2) = Quando se precisa navegar pra outra tabela, e dentro dessa tabela há outros relacionamentos
+// Contato -> Usuário -> EnderecoEntrega, Departamento
+
+var contactsWithAdressList = db.Contatos!
+    .Include(a => a.Usuario)
+    .ThenInclude(u => u.EnderecosEntrega)
+    .ToList();
+
+foreach(var contact in contactsWithAdressList)
+{
+    Console.WriteLine(
+        $"- {contact.Telefone}, {contact.Usuario!.Nome}, {contact.Usuario!.EnderecosEntrega!.Count}"
+    );
+}
