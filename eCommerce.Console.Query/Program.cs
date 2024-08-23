@@ -36,3 +36,24 @@ var user05 = db.Usuarios!.OrderBy(a => a.Id).Last();
 
 // Caso a informação não exista, retorna o valor padrão. Valor padrão depende do tipo.
 var user06 = db.Usuarios!.OrderBy(a => a.Id).LastOrDefault();
+
+// - Single, Count, Min e Max
+
+// Obtendo uma única informação, mediante a pasasgem de um filtro excludente (valores únicos para cada informação)
+var user07 = db.Usuarios!.Single(a => a.Id == 3);
+
+// Caso a informação não exista, retorna o valor padrão. Valor padrão depende do tipo. 
+var user08 = db.Usuarios!.SingleOrDefault(a => a.Id == 3);
+
+// Caso haja mais de um registro, uma exception é lançada.
+var user09 = db.Usuarios!.SingleOrDefault(a => a.Nome.Contains('a'));
+
+// Obtém a quantidade de registro encontrada na consulta.
+var usersListWithLetterA = db.Usuarios.Where(a => a.Nome.Contains('a')).Count();
+
+// Obtém o registro de menor valor.
+var user10 = db.Usuarios.Min(a => a.DataCadastro);
+
+// Obtém o registro de maior valor.
+var user11 = db.Usuarios.Max(a => a.DataCadastro);
+
