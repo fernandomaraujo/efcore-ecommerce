@@ -13,9 +13,9 @@ namespace eCommerce.Console.Tracking
         {
             optionsBuilder
                 .UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=eCommerce;Integrated Security=True;")
-                .LogTo(System.Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
-                .EnableSensitiveDataLogging()
-                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                //.LogTo(System.Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
+                //.EnableSensitiveDataLogging()
+                //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
 
         }
