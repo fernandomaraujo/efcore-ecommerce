@@ -81,7 +81,7 @@ var userList03 = db.Usuarios.OrderBy(a => a.Sexo!.Equals('F')).ThenBy(a => a.Nom
 var userList04 = db.Usuarios.OrderBy(a => a.Sexo).ThenByDescending(a => a.Nome).ToList();
 
 
-// - Eager Load - Include
+// - Eager Load
 // Trabalhando com relacionamentos
 
 // Include (Nível 1) = Inclui um objeto relacionado a classe atual.
@@ -99,5 +99,33 @@ foreach(var contact in contactsWithAdressList)
 {
     Console.WriteLine(
         $"- {contact.Telefone}, {contact.Usuario!.Nome}, {contact.Usuario!.EnderecosEntrega!.Count}"
+    );
+}
+
+// AutoInclude
+// Incluindo um objeto automáticamente
+
+// Limpando o que está sendo acompanhado na memória pelo EF.
+db.ChangeTracker.Clear();
+
+// Trazendo Usario com Contato
+// Inclusão implementada no método "OnModelCreating" do eCommmerceContext
+var usersWithContact = db.Usuarios.ToList();
+
+foreach (var user in usersWithContact)
+{
+    Console.WriteLine(
+        $"- {user.Nome}, {user.Contato!.Telefone}"   
+    );
+}
+
+// Ignorando auto inclusão
+var usersWithContactWithNoAutoIncludes = db.Usuarios.IgnoreAutoIncludes().ToList();
+
+// Informação de contato virá vazia.
+foreach (var user in usersWithContactWithNoAutoIncludes)
+{
+    Console.WriteLine(
+        $"- {user.Nome}, {user.Contato?.Telefone}"
     );
 }
