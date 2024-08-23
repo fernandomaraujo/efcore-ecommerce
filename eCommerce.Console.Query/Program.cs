@@ -57,3 +57,11 @@ var user10 = db.Usuarios.Min(a => a.DataCadastro);
 // Obtém o registro de maior valor.
 var user11 = db.Usuarios.Max(a => a.DataCadastro);
 
+// - WHERE
+
+var allUserList = db.Usuarios.Where(a => a.Nome.StartsWith('a')).ToList();
+foreach(var user in allUserList)
+{
+    Console.WriteLine($"- {user.Nome}");
+}
+
