@@ -157,3 +157,31 @@ foreach(var adress in rioAdressList)
         $"- {adress.NomeEndereco}: {adress.Estado}, {adress.Endereco}"
     );
 }
+
+// - Lazy Loadging - Carregamento Preguiçoso
+// Entidades são carregadas de acordo com as necessidades
+// Não é muito utilizado
+
+// Proxies
+
+// Limpando o que está sendo acompanhado na memória pelo EF.
+db.ChangeTracker.Clear();
+
+var user13 = db.Usuarios.Find(1);
+
+// Informação de endereço está ausente
+Console.WriteLine(
+    $"- {user13.Nome}, {user13.EnderecosEntrega.Count}"
+);
+
+
+/*
+ - Foi instalado o pacote "Microsoft.EntityFrameworkCore.Proxies"
+ - Adicionado adicionado o virtual nas propriedades que serão navegadas
+ - Foi ativado o UseLazyLoadingProxies() no OnConfiguring do eCommerceContext
+ */
+
+// Agora, a informação de endereço está presente
+Console.WriteLine(
+    $"- {user13.Nome}, {user13.EnderecosEntrega.Count}"
+);
