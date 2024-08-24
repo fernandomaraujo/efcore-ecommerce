@@ -81,7 +81,7 @@ var userList03 = db.Usuarios.OrderBy(a => a.Sexo!.Equals('F')).ThenBy(a => a.Nom
 var userList04 = db.Usuarios.OrderBy(a => a.Sexo).ThenByDescending(a => a.Nome).ToList();
 
 
-// - Eager Load
+// - Eager Load - Carregamento Adiantado
 // Trabalhando com relacionamentos
 
 // Include (Nível 1) = Inclui um objeto relacionado a classe atual.
@@ -127,5 +127,33 @@ foreach (var user in usersWithContactWithNoAutoIncludes)
 {
     Console.WriteLine(
         $"- {user.Nome}, {user.Contato?.Telefone}"
+    );
+}
+
+
+// - Explicit Load - Carregamento Explicito
+
+// Limpando o que está sendo acompanhado na memória pelo EF.
+db.ChangeTracker.Clear();
+
+var user12 = db.Usuarios.IgnoreAutoIncludes().FirstOrDefault(a => a.Id == 1);
+
+db.Entry(user12).Reference(a => a.Contato).Load();
+db.Entry(user12).Collection(a => a.EnderecosEntrega!).Load();
+
+Console.WriteLine(
+    $"- {user12.Nome}, {user12.Contato.Telefone}, {user12.EnderecosEntrega.Count}"
+);
+
+var rioAdressList = db.Entry(user12)
+    .Collection(a => a.EnderecosEntrega!)
+    .Query()
+    .Where(a => a.Estado == "RJ")
+    .ToList();
+
+foreach(var adress in rioAdressList)
+{
+    Console.WriteLine(
+        $"- {adress.NomeEndereco}: {adress.Estado}, {adress.Endereco}"
     );
 }
