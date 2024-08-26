@@ -55,3 +55,19 @@ db.SaveChanges();
 
    Na tabela usuário estará atualizado.
 */
+
+// Consultando dados das tabelas temporais(históricos)
+
+// Mostrando todas as informaçõs do histórico daquele usuário
+var usuarioTempAll = db.Usuarios.TemporalAll()!
+    .Where(a => a.Id == 2)
+    // Filtrando por registro temporal do registro inicial
+    .OrderBy(a => EF.Property<DateTime>(a, "PeriodoInicial"))
+    .ToList();
+
+// Mostrando todas as informaçõs do histórico daquele usuário com base na data
+var AsOfDay = new DateTime(2024, 08, 26); // Data de exemplo
+
+var usuarioTemp = db.Usuarios.TemporalAsOf(AsOfDay)!
+    .Where(a => a.Id == 2)
+    .ToList();
