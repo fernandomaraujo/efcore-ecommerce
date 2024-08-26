@@ -1,14 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using eCommerce.Console.Query.Utils;
 
 namespace eCommerce.Console.Query
 {
     public class Usuario
     {
         // Aula de Lazy Load sem proxies
-        private readonly ILazyLoader LazyLoader;
+        //private readonly ILazyLoader LazyLoader;
+
+        // Aula de Lazy Load sem proxies, utilizando delegate
+        private readonly Action<object, string> LazyLoader;
 
         public Usuario() { }
-        public Usuario(ILazyLoader loader) {
+        public Usuario(Action<object, string> loader) {
             LazyLoader = loader;
         }
 
