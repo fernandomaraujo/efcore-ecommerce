@@ -185,3 +185,17 @@ Console.WriteLine(
 Console.WriteLine(
     $"- {user13.Nome}, {user13.EnderecosEntrega.Count}"
 );
+
+
+// Sem Proxies
+/*
+ - Foi removida a chamado do UseLazyLoadingProxies() no OnConfiguring do eCommerceContext
+ - Foi removido o virtual das propriedades citadas anteriormente
+ */
+
+
+// ILazyLoader (EF Core)
+
+
+// Delegate (Modelo -> !Acoplamento do ILazyLoader)
+

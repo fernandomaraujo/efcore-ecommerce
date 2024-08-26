@@ -9,7 +9,7 @@ namespace eCommerce.Console.Query
             // Aula sobre LazyLoading:
             // Determinando uso do Proxies
             optionsBuilder
-                .UseLazyLoadingProxies()
+                //.UseLazyLoadingProxies()
                 .UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=eCommerce;Integrated Security=True;");
 
         }
