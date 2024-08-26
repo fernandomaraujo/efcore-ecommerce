@@ -158,7 +158,7 @@ foreach(var adress in rioAdressList)
     );
 }
 
-// - Lazy Loadging - Carregamento Preguiçoso
+// - Lazy Loading - Carregamento Preguiçoso
 // Entidades são carregadas de acordo com as necessidades
 // Não é muito utilizado
 
@@ -195,7 +195,14 @@ Console.WriteLine(
 
 
 // ILazyLoader (EF Core)
-
-
 // Delegate (Modelo -> !Acoplamento do ILazyLoader)
 
+
+
+// - SplitQuery - Query Dividida
+Console.WriteLine("Query dividida");
+
+var user14 = db.Usuarios!
+    //.AsSplitQuery() // Separando as querys
+    .AsSingleQuery() // Definindo o uso de única query
+    .Include(a => a.EnderecosEntrega).FirstOrDefault(a => a.Id == 1);

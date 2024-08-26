@@ -10,7 +10,11 @@ namespace eCommerce.Console.Query
             // Determinando uso do Proxies
             optionsBuilder
                 //.UseLazyLoadingProxies()
-                .UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=eCommerce;Integrated Security=True;");
+                .UseSqlServer(
+                    "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=eCommerce;Integrated Security=True;",
+                    options => options.UseQuerySplittingBehavior(
+                        QuerySplittingBehavior.SplitQuery) // Definindo o comportamento sendo como o padrão
+                    );
 
         }
 
