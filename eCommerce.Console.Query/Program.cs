@@ -1,4 +1,5 @@
 ﻿using eCommerce.Console.Query;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 var db = new eCommerceContext();
@@ -227,3 +228,27 @@ var usersList = db.Usuarios!
         Nome = b.Nome
     })
     .ToList();
+
+// - SQL RAWN - SQL puro
+
+/*
+ - SQL RAWN - SQL puro, para:
+    SELECT,
+    VIEWS,
+    STORED PROCEDURES
+ */
+
+// Limpando o que está sendo acompanhado na memória pelo EF.
+db.ChangeTracker.Clear();
+
+var user16 = db.Usuarios!.FromSqlRaw(
+    "SELECT * FROM [Usuarios] WHERE Id = 1 ORDER BY Id"
+).IgnoreAutoIncludes();
+
+// Pode-se usar parâmetro. Atenção aos detalhe de proteger o sistema contra SQL Injection
+var nome = "Ethan Hunt";
+var nomeFiltrado = new SqlParameter("@nome", nome);
+
+var user17 = db.Usuarios!.FromSqlRaw(
+    "SELECT * FROM [Usuarios] WHERE Nome LIKE @nome", nome
+).IgnoreAutoIncludes();
