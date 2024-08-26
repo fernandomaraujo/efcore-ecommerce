@@ -1,4 +1,5 @@
-﻿using eCommerce.Console.Extra.Models;
+﻿using Dapper;
+using eCommerce.Console.Extra.Models;
 using eCommerce.Console.Query;
 using Microsoft.EntityFrameworkCore;
 
@@ -84,3 +85,11 @@ var usuarioTempFromTo = db.Usuarios.TemporalFromTo(from, to)!
 var usuarioTempContainedIn = db.Usuarios.TemporalContainedIn(from, to)
     .Where(a => a.Id == 2)
     .ToList();
+
+// -- Integração com o Dapper
+// Permite a utilização de um maior número de querys e possibilidade de melhor performance
+
+// Dapper instalado no projeto: v2.0.123
+
+var connection = db.Database.GetDbConnection();
+var usuarioDapper = connection.Query<Usuario>("SELECT * FROM [Usuarios]");
