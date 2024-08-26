@@ -236,6 +236,8 @@ var usersList = db.Usuarios!
     SELECT,
     VIEWS,
     STORED PROCEDURES
+
+    Possui retorno
  */
 
 // Limpando o que está sendo acompanhado na memória pelo EF.
@@ -252,3 +254,18 @@ var nomeFiltrado = new SqlParameter("@nome", nome);
 var user17 = db.Usuarios!.FromSqlRaw(
     "SELECT * FROM [Usuarios] WHERE Nome LIKE @nome", nome
 ).IgnoreAutoIncludes();
+
+
+/*
+ Execute SQL:
+    INSERT, UPDATE, DELETE
+    STORED PROCEDURES    
+
+    Não possui retorno
+ */
+
+// Apontando diretamente para o banco de dados
+var nomeMae = "Margareth Hunt";
+db.Database.ExecuteSqlInterpolated(
+    $"UPDATE [Usuarios] SET [Mae] = {nomeMae} WHERE Id = 1"    
+);
