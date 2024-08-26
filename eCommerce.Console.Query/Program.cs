@@ -206,3 +206,13 @@ var user14 = db.Usuarios!
     //.AsSplitQuery() // Separando as querys
     .AsSingleQuery() // Definindo o uso de única query
     .Include(a => a.EnderecosEntrega).FirstOrDefault(a => a.Id == 1);
+
+/*
+ TAKE  e SKIP - Para paginação
+ TAKE - Obter uma quantidade definida de registros
+ SKIP - Pular uma quantidade definida de registro
+ */
+
+// Pulando o primeiro registro e pegando os próximos dois registros 
+var userPaginationList = db.Usuarios!.Skip(1).Take(2).ToList();
+
