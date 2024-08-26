@@ -68,6 +68,19 @@ var usuarioTempAll = db.Usuarios.TemporalAll()!
 // Mostrando todas as informaçõs do histórico daquele usuário com base na data
 var AsOfDay = new DateTime(2024, 08, 26); // Data de exemplo
 
-var usuarioTemp = db.Usuarios.TemporalAsOf(AsOfDay)!
+var usuarioTempAsOf = db.Usuarios.TemporalAsOf(AsOfDay)!
+    .Where(a => a.Id == 2)
+    .ToList();
+
+// No intervalo de 24h entre as datas informadas
+var from = new DateTime(2024, 08, 25); // Data de exemplo
+var to = new DateTime(2024, 08, 26); // Data de exemplo
+
+var usuarioTempFromTo = db.Usuarios.TemporalFromTo(from, to)!
+    .Where(a => a.Id == 2)
+    .ToList();
+
+// Registro que se Iniciaram e terminaram entre as datas informadas
+var usuarioTempContainedIn = db.Usuarios.TemporalContainedIn(from, to)
     .Where(a => a.Id == 2)
     .ToList();
