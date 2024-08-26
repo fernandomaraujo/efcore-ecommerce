@@ -11,10 +11,11 @@ namespace eCommerce.Console.Query
             optionsBuilder
                 //.UseLazyLoadingProxies()
                 .UseSqlServer(
-                    "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=eCommerce;Integrated Security=True;",
-                    options => options.UseQuerySplittingBehavior(
-                        QuerySplittingBehavior.SplitQuery) // Definindo o comportamento sendo como o padrão
-                    );
+                    "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=eCommerce;Integrated Security=True;");
+                    //,
+                    //options => options.UseQuerySplittingBehavior(
+                    //    QuerySplittingBehavior.SplitQuery) // Definindo o comportamento sendo como o padrão
+                    //);
 
         }
 

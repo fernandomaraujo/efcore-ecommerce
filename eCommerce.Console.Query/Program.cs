@@ -216,3 +216,14 @@ var user14 = db.Usuarios!
 // Pulando o primeiro registro e pegando os próximos dois registros 
 var userPaginationList = db.Usuarios!.Skip(1).Take(2).ToList();
 
+
+// - SELECT - Selecionar propriedades
+
+var usersList = db.Usuarios!
+    .Where(a => a.Id > 2)
+    .Select(b => new Usuario
+    {
+        Id = b.Id,
+        Nome = b.Nome
+    })
+    .ToList();
