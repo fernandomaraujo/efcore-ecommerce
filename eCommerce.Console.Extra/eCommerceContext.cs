@@ -21,8 +21,12 @@ namespace eCommerce.Console.Query
         {
             // Filtro global para trazer apenas usuários ativos
             modelBuilder.Entity<Usuario>()
-                .HasQueryFilter(a => a.SituacaoCadastro == "A");
+                .HasQueryFilter(a => a.SituacaoCadastro == SituacaoCadastro.Ativo);
 
+            // Conversão
+            modelBuilder.Entity<Usuario>()
+                .Property(a => a.SituacaoCadastro)
+                .HasConversion<string>();
         }
     }
 }
