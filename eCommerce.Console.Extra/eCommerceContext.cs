@@ -9,7 +9,7 @@ namespace eCommerce.Console.Query
         {
             optionsBuilder
                 .UseSqlServer(
-                    "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=eCommerce;Integrated Security=True;");
+                    "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=eCommerceTemp;Integrated Security=True;");
         }
 
         public DbSet<Usuario>? Usuarios { get; set; }
@@ -19,6 +19,19 @@ namespace eCommerce.Console.Query
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Habilitando tabela temporária para Usuario
+            modelBuilder.Entity<Usuario>()
+                .ToTable("Usuarios",
+                t => t.IsTemporal(
+                    b =>
+                    {
+                        b.HasPeriodStart("PeriodoInicial");
+                        b.HasPeriodEnd("PeriodoFinal");
+                        b.UseHistoryTable("UsuarioHistorico");
+                    }
+                    )
+                );
+
             // Filtro global para trazer apenas usuários ativos
             modelBuilder.Entity<Usuario>()
                 .HasQueryFilter(a => a.SituacaoCadastro == SituacaoCadastro.Ativo);

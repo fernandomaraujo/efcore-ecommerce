@@ -14,3 +14,12 @@ var usuariosList02 = db.Usuarios!.IgnoreQueryFilters().ToList();
 // - VALUE CONVERSION
 
 var usuariosList03 = db.Usuarios!.ToList();
+
+// - TABELAS TEMPORARIS (EFCORE > 6 && banco de dados ser da Microsoft)
+
+/*
+ - Habilitar tabela temporária para uma entidade, no Context
+ - Add-Migration
+ - Update-Database
+ - Tabela temporária criada
+ */
